@@ -6,19 +6,21 @@ $(document).ready(function () {
             API_KEY = data;
         });
 
+    /* When API is clicked, take value in search box and pass to searchShodan function */
     $('#searchButton').click(function () {
         var searchValue = $('#searchBox').val();
         searchShodan(searchValue);
     });
 
+    /* Calls Shodan search api with specified search value, adds the results to a bootstrap list */
     function searchShodan(queryVal) {
         $.get('https://api.shodan.io/shodan/host/search', {
                 key: API_KEY,
                 query: queryVal
             })
-            .done(function (data) {
+            .done(function (data) { //when done, use the data
                 var html = '';
-                data.matches.forEach(function (match) {
+                data.matches.forEach(function (match) { //for each match, add its name
                     html += '<li class="list-group-item">'
                     html +=     '<span class="badge">'
                     html +=         '<i class="fa fa-check" aria-hidden="true"></i>'
@@ -27,7 +29,7 @@ $(document).ready(function () {
                     html += '</li>'
                 });
 
-                $('#results').append(html);
+                $('#results').append(html); //add all the matches to the page
             });
     }
 });
